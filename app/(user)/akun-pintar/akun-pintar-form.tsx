@@ -4,7 +4,7 @@
 import { useState, useTransition, type FormEvent } from "react";
 import { toast } from "sonner";
 import { Eye, EyeOff, Pencil, KeyRound } from "lucide-react";
-import { simpanAkunPintar } from "../actions";
+import { simpanAkunPintar } from "./actions";
 
 type Props = {
   emailAwal: string;
