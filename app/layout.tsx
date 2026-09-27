@@ -1,5 +1,6 @@
 // Portal TC Surabaya — dibuat oleh Bang Ajiib (2026)
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/layout/theme-provider";
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="id" suppressHydrationWarning>

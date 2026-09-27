@@ -37,4 +37,3 @@ npm run dev
 
 Jalankan `supabase/schema.sql` di Supabase SQL Editor pada project baru
 sebelum menjalankan aplikasi.
-"# portal-tc-surabaya" 
