@@ -1,6 +1,7 @@
 // Portal TC Surabaya — dibuat oleh Bang Ajiib (2026)
 import { createClient } from "@/lib/supabase/server";
 import { Topbar } from "@/components/layout/topbar";
+import { PasswordReveal } from "@/components/features/akun-pintar/password-reveal";
 import type { Profile } from "@/lib/types";
 
 const fields: { label: string; key: keyof Profile }[] = [
@@ -27,9 +28,18 @@ export default async function DashboardPage() {
 
   const { data: akunPintar } = await supabase
     .from("akun_pintar")
-    .select("email_pintar")
+    .select("email_pintar, password_pintar_enc")
     .eq("user_id", user!.id)
     .maybeSingle();
+
+  let passwordPintar: string | null = null;
+  if (akunPintar?.password_pintar_enc) {
+    const { data: decrypted } = await supabase.rpc("decrypt_akun_pintar", {
+      cipher: akunPintar.password_pintar_enc,
+      key: process.env.AKUN_PINTAR_ENCRYPTION_KEY!,
+    });
+    passwordPintar = decrypted ?? null;
+  }
 
   return (
     <>
@@ -64,6 +74,18 @@ export default async function DashboardPage() {
               <dd className="mt-0.5 text-sm">
                 {akunPintar?.email_pintar ?? (
                   <span className="text-ink-soft">Belum diisi</span>
+                )}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs font-medium uppercase tracking-wide text-ink-soft">
+                Password Pintar
+              </dt>
+              <dd className="mt-0.5">
+                {passwordPintar ? (
+                  <PasswordReveal value={passwordPintar} />
+                ) : (
+                  <span className="text-sm text-ink-soft">Belum diisi</span>
                 )}
               </dd>
             </div>
